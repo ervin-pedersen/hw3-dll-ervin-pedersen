@@ -74,13 +74,19 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
             }
             lastItemReturned = null; // No item returned yet.
             // Special case of last item.
-            if (i == size) {
+            if (i == size)
+            {
                 index = size;
                 nextItem = null;
-            } else { // Start at the beginning
+            }
+            else { // Start at the beginning
                 nextItem = head;
+
+
                 for (index = 0; index < i; index++) {
                     nextItem = nextItem.next;
+                    //code Jose helped me with.
+                    lastItemReturned = nextItem.prev;
                 }
             }
         }
