@@ -22,26 +22,6 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     // Get the element at position index.
     @Override
     public E get(int index) {
-        if(index == 0)
-        {
-            throw new IndexOutOfBoundsException();
-        }
-        if(index == 1)
-        {
-            throw new IndexOutOfBoundsException();
-        }
-//        if (listIterator(index).next()==null)
-//        {
-//            throw new IndexOutOfBoundsException();
-//        }
-//        if (index >= size)
-//        {
-//            throw new IndexOutOfBoundsException();
-//        }
-//        if (index >0 )
-//        {
-//            throw new IndexOutOfBoundsException();
-//        }
         return listIterator(index).next();
     }
 
@@ -62,10 +42,12 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          * Construct a node with the given data value.
          * @param dataItem The data value
          */
-        private Node(E dataItem) {
+        private Node(E dataItem)
+        {
             data = dataItem;
         }
     } //end class Node
+
     //Ervin's code for this project
     //method called ListIterator
     //what it does is it returns a new KWListIter(index) to the user
@@ -88,8 +70,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         public KWListIter(int i) {
             // Validate i parameter.
             if (i < 0 || i > size) {
-                throw new IndexOutOfBoundsException(
-                        "Invalid index " + i);
+                throw new IndexOutOfBoundsException();
             }
             lastItemReturned = null; // No item returned yet.
             // Special case of last item.
@@ -122,38 +103,33 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          *Third set the .prev of the next node to null if that node exists
          */
 
+
         public void remove()
         {
-            if (lastItemReturned == null)
+            Node<E> node = head;
+            while(node!=null)
             {
-                throw new IllegalStateException();
+                Node<E> assistantNode = node.next;
+                node.next = node.prev =null;
+
+                node = assistantNode;
             }
-            //deal with the head node
-            if (lastItemReturned == head)
-            {
-                head = lastItemReturned.next;
-            }
-            //deal with the tail node
-            if (lastItemReturned == tail)
-            {
-                if(lastItemReturned.next != null)
-                {
-                    lastItemReturned.next.prev = lastItemReturned.prev;
-                }
-            }
-            //change next only if node to be deleted is not the last one
-            if (lastItemReturned != null)
-            {
-                lastItemReturned.next.prev = lastItemReturned.prev;
-            }
-            //change prev if the node to be deleted is not the 1 node
-            if(lastItemReturned.prev != null)
-            {
-                lastItemReturned.prev.next = lastItemReturned.next;
-            }
+            size = 0;
+            index++;
         }
+        public void clear()
+        {
+            Node<E> node = head;
+            while(node!=null)
+            {
+                Node<E> assistantNode = node.next;
+                node.next = node.prev =null;
 
-
+                node = assistantNode;
+            }
+            size = 0;
+            index++;
+        }
         /**
          * Construct a KWListIter that is a copy of another KWListIter
          * @param other The other KWListIter
@@ -195,6 +171,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          */
         @Override
         public boolean hasPrevious() {
+
             return (nextItem == null && size != 0)
                     || nextItem.prev != null;
         }
