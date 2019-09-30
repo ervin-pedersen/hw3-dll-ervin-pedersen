@@ -81,8 +81,6 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
             }
             else { // Start at the beginning
                 nextItem = head;
-
-
                 for (index = 0; index < i; index++) {
                     nextItem = nextItem.next;
                     //code Jose helped me with.
@@ -100,7 +98,6 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
             }
             lastItemReturned.data = object;
         }
-
         //
         /*
          *Ervin's attempt at a remove method
@@ -108,21 +105,33 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          *Second set the previous node's next to null.
          *Third set the .prev of the next node to null if that node exists
          */
-
-
         public void remove()
         {
-            Node<E> node = head;
-            while(node!=null)
-            {
-                Node<E> assistantNode = node.next;
-                node.next = node.prev =null;
+           if (head == null||lastItemReturned == null)
+           {
+               return;
+           }
+           // If node to be deleted is head node
+           if (head == lastItemReturned)
+           {
+               head = head.next;
+           }
+           // Change next only if node to be deleted
+            // is NOT the last node
+           if (lastItemReturned.next != null)
+           {
+               lastItemReturned.next.prev = lastItemReturned.prev;
+           }
+           if (lastItemReturned.prev != null)
+           {
+               nextItem.prev = lastItemReturned.prev;
+           }
 
-                node = assistantNode;
-            }
-            size = 0;
-            index++;
+            size--;
+
+           return;
         }
+
         public void clear()
         {
             Node<E> node = head;
@@ -163,7 +172,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         @Override
         public E next() {
             if (!hasNext()) {
-                throw new NoSuchElementException();
+                throw new IndexOutOfBoundsException();
             }
             lastItemReturned = nextItem;
             nextItem = nextItem.next;
