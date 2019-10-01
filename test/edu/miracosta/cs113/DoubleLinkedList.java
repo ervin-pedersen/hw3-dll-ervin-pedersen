@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 {
     /************************ Instance variables ****************************/
-    private Node<E> head = null ;               // Reference to head of the list
-    private Node<E> tail = null ;               // Reference to tail end of the list
+    public Node<E> head = null ;               // Reference to head of the list
+    public Node<E> tail = null ;               // Reference to tail end of the list
     private int size = 0;                       // Number of nodes in the list
 
     /**************************** Methods *******************************/
@@ -32,11 +32,11 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     }
     /********************************** Inner Classes*******************************/
     // A Node is the building block for a double-linked list.
-    private static class Node<E> {
+    public static class Node<E> {
 
-        private E data;                   // data value in the node
-        private Node<E> next = null;      // line to next node in the list
-        private Node<E> prev = null;      // link to previous node in the list
+        public E data;                   // data value in the node
+        public Node<E> next = null;      // line to next node in the list
+        public Node<E> prev = null;      // link to previous node in the list
 
         /**
          * Construct a node with the given data value.
@@ -78,14 +78,16 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
             {
                 index = size;
                 nextItem = null;
+                lastItemReturned = tail;
             }
             else { // Start at the beginning
                 nextItem = head;
                 for (index = 0; index < i; index++) {
                     nextItem = nextItem.next;
                     //code Jose helped me with.
-                    lastItemReturned = nextItem.prev;
+                    //lastItemReturned = nextItem.prev; Should have to call next or previous before you can have something to remove.
                 }
+
             }
         }
         //Ervin's code for public set(E object)
@@ -105,28 +107,70 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          *Second set the previous node's next to null.
          *Third set the .prev of the next node to null if that node exists
          */
-        public void remove()
-        {
-           if (head == null||lastItemReturned == null)
+        public void remove() {
+            if (head == null) {
+                return;
+            }
+            if (lastItemReturned.next == null)
+            {
+                //throw new NullPointerException();
+                //tail = lastItemReturned;
+            }
+
+           if (lastItemReturned == null)
            {
-               return;
+                return;
            }
            // If node to be deleted is head node
            if (head == lastItemReturned)
            {
-               head = head.next;
+               head = lastItemReturned.next;
+               lastItemReturned.next.prev = null;
+               lastItemReturned.next = null;
+               lastItemReturned.prev = null;
+               lastItemReturned = null;
+               //size--;
+
+           }
+           else if (lastItemReturned.next == null)
+           {
+               //removing tail
+               tail = lastItemReturned.prev;
+               lastItemReturned.prev.next = null;
+               lastItemReturned.prev = null;
+           }
+               else if (lastItemReturned.prev == null)
+           {
+               head = lastItemReturned.next;
+               lastItemReturned.next.prev = null;
+               lastItemReturned.next = null;
+               lastItemReturned.prev = null;
+
            }
            // Change next only if node to be deleted
             // is NOT the last node
-           if (lastItemReturned.next != null)
+           else if (lastItemReturned.next != null && lastItemReturned.prev != null)
            {
-               lastItemReturned.next.prev = lastItemReturned.prev;
-           }
-           if (lastItemReturned.prev != null)
-           {
-               nextItem.prev = lastItemReturned.prev;
-           }
+               //lastItemReturned.next.prev = lastItemReturned.prev;
+               // chris help taken outnextItem.prev = lastItemReturned.prev;
+               //replaced with
 
+
+               lastItemReturned.prev.next = lastItemReturned.next;
+               lastItemReturned.next.prev = lastItemReturned.prev;
+               lastItemReturned = null;
+
+           }
+//           if (lastItemReturned.prev != null)
+//           {
+//               //nextItem.prev = lastItemReturned.prev;
+//               lastItemReturned.prev.prev = lastItemReturned.prev;
+//           }
+//           if (lastItemReturned.next == null)
+//           {
+//               lastItemReturned.prev.next = null;
+//               lastItemReturned.prev =null;
+//           }
             size--;
 
            return;
@@ -134,16 +178,26 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 
         public void clear()
         {
-            Node<E> node = head;
-            while(node!=null)
-            {
-                Node<E> assistantNode = node.next;
-                node.next = node.prev =null;
 
-                node = assistantNode;
+            if (lastItemReturned != null)
+            {
+                lastItemReturned.next = null;
+                lastItemReturned.prev = null;
+                lastItemReturned = null;
+                head = lastItemReturned;
             }
             size = 0;
-            index++;
+            //index++;
+//            Node<E> node = head;
+//            while(node!=null)
+//            {
+//                Node<E> assistantNode = node.next;
+//                node.next = node.prev = null;
+//
+//                node = assistantNode;
+//            }
+//            size = 0;
+//            index++;
         }
         /**
          * Construct a KWListIter that is a copy of another KWListIter
