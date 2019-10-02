@@ -19,12 +19,12 @@ public class tester {
         list.add(5);
 
         ListIterator<Integer> iter = list.listIterator();
-        iter.next();
-        iter.next();
-        iter.next();
-//        list.remove();
-        iter.next();
-        iter.next();
+        //iter.next();
+//        iter.next();
+//        iter.next();
+//
+//        iter.next();
+//        iter.next();
 
 
         Node<Integer> head = ((DoubleLinkedList<Integer>) list).head;
@@ -45,6 +45,7 @@ public class tester {
         System.out.println();
 
         for (int i = 0; i < list.size(); i++) {
+            System.out.println(iter.hasPrevious());
             System.out.println(list.get(i));
         }
     }

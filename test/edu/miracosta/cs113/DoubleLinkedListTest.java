@@ -1,6 +1,7 @@
 package edu.miracosta.cs113;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -274,6 +275,7 @@ public class DoubleLinkedListTest {
     }
 
     @Test
+
     public void testIndexOf() {
         buildLists(4);
 

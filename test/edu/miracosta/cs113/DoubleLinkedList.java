@@ -1,5 +1,7 @@
 package edu.miracosta.cs113;
 
+//import com.sun.java.util.jar.pack.ConstantPool;
+
 import java.util.ListIterator;
 import java.util.AbstractSequentialList;
 import java.util.NoSuchElementException;
@@ -21,7 +23,12 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 
     // Get the element at position index.
     @Override
-    public E get(int index) {
+    public E get(int index)throws IndexOutOfBoundsException {
+        if (index >= size ||index<0)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+
         return listIterator(index).next();
     }
 
@@ -250,7 +257,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
-                //throw new IndexOutOfBoundsException();
+             //   throw new IndexOutOfBoundsException();
             }
 
             lastItemReturned = nextItem;
@@ -265,9 +272,13 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          */
         @Override
         public boolean hasPrevious() {
+                //this was my orginal code but it is broken
+//            return (nextItem == null && size != 0)
+//                    || nextItem.prev != null;
+            //code revision
+            return(nextItem != null ) && nextItem.prev !=null;
 
-            return (nextItem == null && size != 0)
-                    || nextItem.prev != null;
+
         }
 
         /**
