@@ -276,8 +276,10 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 //            return (nextItem == null && size != 0)
 //                    || nextItem.prev != null;
             //code revision
-            return(nextItem != null ) && nextItem.prev !=null;
+            //return(nextItem != null ) && nextItem.prev !=null;
 
+            //second revision
+            return (head != lastItemReturned && size!=0 && head != nextItem);
 
         }
 

@@ -19,12 +19,12 @@ public class tester {
         list.add(5);
 
         ListIterator<Integer> iter = list.listIterator();
-        //iter.next();
-//        iter.next();
-//        iter.next();
-//
-//        iter.next();
-//        iter.next();
+        iter.next();
+        iter.next();
+        iter.next();
+
+        iter.next();
+        iter.next();
 
 
         Node<Integer> head = ((DoubleLinkedList<Integer>) list).head;
