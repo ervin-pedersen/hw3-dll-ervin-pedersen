@@ -1,7 +1,5 @@
 package edu.miracosta.cs113;
 
-//import com.sun.java.util.jar.pack.ConstantPool;
-
 import java.util.ListIterator;
 import java.util.AbstractSequentialList;
 import java.util.NoSuchElementException;
@@ -11,7 +9,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     /************************ Instance variables ****************************/
     public Node<E> head = null ;               // Reference to head of the list
     public Node<E> tail = null ;               // Reference to tail end of the list
-    private int size = 0;                       // Number of nodes in the list
+    private int size = 0;                      // Number of nodes in the list
 
     /**************************** Methods *******************************/
 
@@ -62,16 +60,9 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         }
         public void clear()
         {
-
         size = 0;
         head = null;
         tail = null;
-
-
-//            head = null;
-//            lastItemReturned = null;
-//            nextItem = null;
-//            size = 0;
     }
     //Ervin's code for this project
     //method called ListIterator
@@ -109,8 +100,6 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
                 nextItem = head;
                 for (index = 0; index < i; index++) {
                     nextItem = nextItem.next;
-                    //code Jose helped me with.
-                    //lastItemReturned = nextItem.prev; Should have to call next or previous before you can have something to remove.
                 }
 
             }
@@ -125,40 +114,12 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
             }
             lastItemReturned.data = object;
         }
-        //
         /*
-         *Ervin's attempt at a remove method
+         *Ervin's attempt at an iterator remove method
          *First if node to be removed is head node set its next node to be head.
          *Second set the previous node's next to null.
          *Third set the .prev of the next node to null if that node exists
          */
-//        public void remove()
-//        {
-//            if (head == null)
-//            {
-//                return;
-//            }
-//            if (head.next == null)
-//            {
-//                throw new IllegalStateException();
-//            }
-//
-//            if (lastItemReturned == null)
-//            {
-//                throw new IllegalStateException();
-//                //return;
-//            }
-//            if (lastItemReturned.next == null)
-//            {
-//
-//                //tail = lastItemReturned;
-//            }
-//            //only removes the head
-//            head = head.next;
-//            lastItemReturned.next = null;
-//            lastItemReturned.next.prev = null;
-//            size--;
-//        }
         //iterator remove method
         public void remove() {
             if (head == null) {
@@ -191,7 +152,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
                lastItemReturned.prev.next = null;
                lastItemReturned.prev = null;
            }
-               else if (lastItemReturned.prev == null)
+           else if (lastItemReturned.prev == null)
            {
                head = lastItemReturned.next;
                lastItemReturned.next.prev = null;
@@ -199,30 +160,14 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
                lastItemReturned.prev = null;
 
            }
-           // Change next only if node to be deleted
-            // is NOT the last node
+           // is NOT the last node
            else if (lastItemReturned.next != null && lastItemReturned.prev != null)
            {
-               //lastItemReturned.next.prev = lastItemReturned.prev;
-               // chris help taken outnextItem.prev = lastItemReturned.prev;
-               //replaced with
-
-
                lastItemReturned.prev.next = lastItemReturned.next;
                lastItemReturned.next.prev = lastItemReturned.prev;
                lastItemReturned = null;
 
            }
-//           if (lastItemReturned.prev != null)
-//           {
-//               //nextItem.prev = lastItemReturned.prev;
-//               lastItemReturned.prev.prev = lastItemReturned.prev;
-//           }
-//           if (lastItemReturned.next == null)
-//           {
-//               lastItemReturned.prev.next = null;
-//               lastItemReturned.prev =null;
-//           }
             size--;
 
            return;
@@ -272,12 +217,6 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
          */
         @Override
         public boolean hasPrevious() {
-                //this was my orginal code but it is broken
-//            return (nextItem == null && size != 0)
-//                    || nextItem.prev != null;
-            //code revision
-            //return(nextItem != null ) && nextItem.prev !=null;
-
             //second revision
             return (head != lastItemReturned && size!=0 && head != nextItem);
 
